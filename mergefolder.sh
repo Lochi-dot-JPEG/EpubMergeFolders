@@ -1,4 +1,4 @@
-#!/usr/bin/sh
+#!/usr/bin/bash
 
 # Path to put merged files
 OUTPUT_PATH=~/merged
@@ -18,6 +18,20 @@ VOLUMES_NO_SPACES=`echo $VOLUMES | tr ' ' '-'`
 # Convert the seperator from zenity to spaces
 VOLUMES_SPACED=`echo $VOLUMES_NO_SPACES | tr '%' ' '`
 
+echo "Output directory, to put merged epubs:"
+read -e -i $OUTPUT_PATH inputted_directory
+
+if [ ! -d $inputted_directory ]
+then
+  echo "$inputted_directory doesn't exist."
+  echo "Using default directory"
+elif [ "$inputted_directory" = "" ]
+then
+  echo "Using default directory"
+else
+  OUTPUT_PATH=$inputted_directory
+fi
+
 echo "What should the series be called?"
 echo "FORMAT \"(your input now) (folder name).epub\""
 read SERIESNAME
@@ -28,8 +42,7 @@ SERIESNAME=`echo $SERIESNAME | tr ' ' '-'`
 echo "Remember not to include % or - in your file paths :)"
 
 # Make output folders
-mkdir $OUTPUT_PATH
-mkdir ${OUTPUT_PATH}/${SERIESNAME}
+mkdir -p ${OUTPUT_PATH}/${SERIESNAME}
 
 # Convert to array (I don't know if this is necessary)
 items=($VOLUMES_SPACED)
@@ -53,7 +66,7 @@ do
 	foldername=`echo $foldername | tr ' ' '-'`
 
 
-	output_dir="${OUTPUT_PATH}/${SERIESNAME}/${SERIESNAME}${foldername}.epub"
+	output_dir="${OUTPUT_PATH}/${SERIESNAME}/${SERIESNAME}-${foldername}.epub"
 
 	# Merge files
 	python $MERGE_SCRIPT_PATH -o $output_dir $files
