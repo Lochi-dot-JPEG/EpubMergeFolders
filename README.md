@@ -1,5 +1,15 @@
 # EpubMerge
 
+mergefolder.sh is a wrapper for the calibre plugin that lets it be used to combine folders without going through calibre.
+
+Usage:
+* Clone repository and open in terminal
+* chmod +x mergefolder.sh
+* Run mergefolder.sh
+* Select which folders you want to combine
+* Input a prefix for the folders in the output
+* Thats it
+
 This is a repository for the EpubMerge Calibre Plugin.
 
 Most discussion of this plugin takes place in the [EpubMerge Calibre Plugin forum].
